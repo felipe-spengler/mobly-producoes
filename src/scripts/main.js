@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortfolioFilter();
   initLightbox();
   initPricingTabs();
-  initSimulator();
   initFaqAccordion();
 });
 /* --------------------------------------------------------------------------
@@ -274,84 +273,6 @@ function initPricingTabs() {
       });
     });
   });
-}
-
-/* --------------------------------------------------------------------------
-   Interactive WhatsApp Budget Simulator
-   -------------------------------------------------------------------------- */
-function initSimulator() {
-  const serviceRadios = document.querySelectorAll('input[name="sim-service"]');
-  const addonCheckboxes = document.querySelectorAll('input[name="sim-addon"]');
-  const estimateDisplay = document.getElementById('simEstimateDisplay');
-  const estimateBreakdown = document.getElementById('simBreakdown');
-  const sendBtn = document.getElementById('simSendWhatsapp');
-
-  if (!serviceRadios.length || !estimateDisplay) return;
-
-  function updateCalculation() {
-    let basePrice = 0;
-    let selectedServiceName = '';
-
-    const selectedService = document.querySelector('input[name="sim-service"]:checked');
-    if (selectedService) {
-      basePrice = parseInt(selectedService.value, 10) || 0;
-      selectedServiceName = selectedService.getAttribute('data-name') || '';
-    }
-
-    // Highlight labels
-    serviceRadios.forEach(radio => {
-      const parentLabel = radio.closest('.sim-option-label');
-      if (parentLabel) {
-        if (radio.checked) parentLabel.classList.add('checked');
-        else parentLabel.classList.remove('checked');
-      }
-    });
-
-    let addonsTotal = 0;
-    const selectedAddons = [];
-
-    addonCheckboxes.forEach(checkbox => {
-      const parentLabel = checkbox.closest('.sim-option-label');
-      if (checkbox.checked) {
-        if (parentLabel) parentLabel.classList.add('checked');
-        addonsTotal += parseInt(checkbox.value, 10) || 0;
-        selectedAddons.push(checkbox.getAttribute('data-name'));
-      } else {
-        if (parentLabel) parentLabel.classList.remove('checked');
-      }
-    });
-
-    const total = basePrice + addonsTotal;
-    estimateDisplay.textContent = `R$ ${total.toLocaleString('pt-BR')}`;
-
-    if (estimateBreakdown) {
-      estimateBreakdown.innerHTML = `
-        <div><strong>Serviço selecionado:</strong> ${selectedServiceName}</div>
-        ${selectedAddons.length ? `<div><strong>Opcionais:</strong> ${selectedAddons.join(', ')}</div>` : '<div><strong>Opcionais:</strong> Nenhum selecionado</div>'}
-        <div style="font-size:0.75rem; color:var(--color-cream-muted); margin-top:0.35rem;">
-          *Estimativa base para Goiânia e região. Valores sujeitos a confirmação de data e escopo detalhado.
-        </div>
-      `;
-    }
-
-    if (sendBtn) {
-      const msg = [
-        `Olá Débora! Fiz uma simulação no site da Mobly:`,
-        `• Serviço: ${selectedServiceName}`,
-        selectedAddons.length ? `• Opcionais: ${selectedAddons.join(', ')}` : '',
-        `• Estimativa calculada: R$ ${total.toLocaleString('pt-BR')}`,
-        ``,
-        `Gostaria de verificar disponibilidade de agenda e fechar os detalhes!`
-      ].filter(Boolean).join('\n');
-
-      sendBtn.href = `https://wa.me/5564981346985?text=${encodeURIComponent(msg)}`;
-    }
-  }
-
-  serviceRadios.forEach(r => r.addEventListener('change', updateCalculation));
-  addonCheckboxes.forEach(c => c.addEventListener('change', updateCalculation));
-
-  updateCalculation();
 }
 
 /* --------------------------------------------------------------------------
