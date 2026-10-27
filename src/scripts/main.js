@@ -114,7 +114,7 @@ function initVideoPlayerModal() {
 
   if (heroPlayBtn) {
     heroPlayBtn.addEventListener('click', () => {
-      openCinemaModal('videos/video1.mov', 'Casamento & Emoção · Showreel');
+      openCinemaModal('/videos/video1.mp4', 'Casamento & Emoção · Showreel');
     });
   }
 
