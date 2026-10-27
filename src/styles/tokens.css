@@ -1,36 +1,54 @@
 /* ==========================================================================
    MOBLY PRODUÇÕES 3.0 — DESIGN SYSTEM TOKENS
-   Aesthetic: Cinematic Editorial / High-End Director / Warm Golden Minimal
+   Aesthetic: Cinematic Editorial / Warm Espresso & Soft Black / Scarlet & Butter Yellow
    ========================================================================== */
 
 :root {
-  /* Brand Palettes */
-  --bg-dark: #0b0c0e;
-  --bg-surface: #121316;
-  --bg-card: #18191d;
-  --bg-card-hover: #1f2025;
-  --bg-overlay: rgba(11, 12, 14, 0.85);
+  /* Fundo: preto suave e marrom bem escuro */
+  --bg-dark: #0d0c0b;            /* Preto suave acolhedor (warm soft black) */
+  --bg-surface: #161311;         /* Marrom bem escuro / espresso profundo */
+  --bg-card: #1c1815;            /* Marrom escuro para cards e superfícies */
+  --bg-card-hover: #25201c;       /* Marrom escuro hover */
+  --bg-overlay: rgba(13, 12, 11, 0.88);
+  --bg-brown-soft: #231d18;
+  --bg-brown-deep: #12100e;
 
-  /* Warm Cream & Gold Cinema Tones (Site 1 + 2 Fusion) */
-  --color-cream: #f6f3eb;
-  --color-cream-soft: #ece7db;
-  --color-cream-muted: rgba(246, 243, 235, 0.65);
-  --color-cream-faint: rgba(246, 243, 235, 0.12);
+  /* Textos: off-white, com tons de bege para textos secundários */
+  --color-offwhite: #f7f5f0;     /* Texto principal límpido */
+  --color-cream: #f7f5f0;        /* Compatibilidade com classes existentes */
+  --color-cream-soft: #ede7dd;
+  --color-beige: #d6ccbd;        /* Bege para subtítulos e dados */
+  --color-beige-muted: #ad9f8e;  /* Bege suave para textos secundários e descrições */
+  --color-cream-muted: #b8ac9c;  /* Bege elegante substituindo cinza frio */
+  --color-cream-faint: rgba(214, 204, 189, 0.12);
 
-  --color-amber: #dfa856;
-  --color-amber-light: #eed199;
-  --color-amber-glow: rgba(223, 168, 86, 0.25);
-  --color-butter: #faeac4;
-  --color-butter-soft: rgba(250, 234, 196, 0.15);
+  /* Botões principais: escarlate, como o REC da logo */
+  --color-scarlet: #e52828;      /* Vermelho escarlate do ponto REC da Mobly */
+  --color-scarlet-hover: #f53838;
+  --color-scarlet-dark: #b81c1c;
+  --color-scarlet-glow: rgba(229, 40, 40, 0.32);
+  --color-rec: #e52828;
+  --color-rec-glow: rgba(229, 40, 40, 0.45);
 
-  --color-rec: #ff3b30;
-  --color-rec-glow: rgba(255, 59, 48, 0.4);
+  /* Amarelo-manteiga: em pequenas áreas de destaque, cards de social media e detalhes gráficos */
+  --color-butter: #fae8b4;       /* Amarelo-manteiga suave, elegante e luminoso */
+  --color-butter-light: #fff2c9;
+  --color-butter-soft: rgba(250, 232, 180, 0.14);
+  --color-butter-glow: rgba(250, 232, 180, 0.28);
+  --color-butter-border: rgba(250, 232, 180, 0.32);
+  --color-accent: var(--color-butter);
 
-  /* Muted Grayscale & Borders */
-  --border-light: rgba(246, 243, 235, 0.1);
-  --border-subtle: rgba(246, 243, 235, 0.06);
-  --border-amber: rgba(223, 168, 86, 0.35);
-  --border-focus: #dfa856;
+  /* Aliases para compatibilidade (substituindo o dourado metálico por amarelo-manteiga) */
+  --color-amber: var(--color-butter);
+  --color-amber-light: var(--color-butter-light);
+  --color-amber-glow: var(--color-butter-glow);
+  --border-amber: var(--border-butter);
+
+  /* Muted Grayscale & Borders (sem dourado recorrente) */
+  --border-light: rgba(214, 204, 189, 0.14);
+  --border-subtle: rgba(214, 204, 189, 0.08);
+  --border-butter: rgba(250, 232, 180, 0.28);
+  --border-focus: var(--color-scarlet);
 
   /* Typography */
   --font-serif: 'Fraunces', Georgia, serif;
@@ -38,10 +56,12 @@
   --font-mono: 'Space Grotesk', ui-monospace, monospace;
 
   /* Shadows & Elevations */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 8px 32px rgba(223, 168, 86, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+  --shadow-scarlet: 0 8px 24px var(--color-scarlet-glow);
+  --shadow-butter: 0 8px 24px rgba(250, 232, 180, 0.16);
+  --shadow-gold: var(--shadow-scarlet);
 
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
