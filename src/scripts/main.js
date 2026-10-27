@@ -88,7 +88,7 @@ function initVideoPlayerModal() {
   const videoCards = document.querySelectorAll('.video-card');
   const heroPlayBtn = document.getElementById('heroPlayBtn');
 
-  // Video hover preview on desktop
+  // Video hover preview & click actions
   videoCards.forEach(card => {
     const video = card.querySelector('video');
     if (video) {
@@ -105,16 +105,35 @@ function initVideoPlayerModal() {
       });
     }
 
-    card.addEventListener('click', () => {
+    const handleCardAction = () => {
+      const whatsappMsg = card.getAttribute('data-whatsapp-msg');
+      if (whatsappMsg) {
+        const url = `https://wa.me/5564981346985?text=${encodeURIComponent(whatsappMsg)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
       const src = card.getAttribute('data-video-src');
-      const title = card.getAttribute('data-video-title') || 'Vídeo Mobly';
-      openCinemaModal(src, title);
+      if (src) {
+        const title = card.getAttribute('data-video-title') || 'Vídeo Mobly';
+        openCinemaModal(src, title);
+      }
+    };
+
+    card.addEventListener('click', handleCardAction);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCardAction();
+      }
     });
   });
 
   if (heroPlayBtn) {
     heroPlayBtn.addEventListener('click', () => {
-      openCinemaModal('/videos/video1.mp4', 'Casamento & Emoção · Showreel');
+      const target = document.getElementById('videos');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
 
