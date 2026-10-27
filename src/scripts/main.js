@@ -5,7 +5,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
-  initTimecode();
   initVideoPlayerModal();
   initPortfolioFilter();
   initLightbox();
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSimulator();
   initFaqAccordion();
 });
-
 /* --------------------------------------------------------------------------
    Header Scroll & Mobile Menu
    -------------------------------------------------------------------------- */
@@ -24,46 +22,58 @@ function initHeader() {
   const drawerLinks = document.querySelectorAll('.mobile-drawer-link');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
+    if (window.scrollY > 30) {
       header?.classList.add('scrolled');
     } else {
       header?.classList.remove('scrolled');
     }
   }, { passive: true });
 
+  function closeMenu() {
+    drawer?.classList.remove('open');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    menuBtn?.classList.remove('active');
+    document.body.classList.remove('menu-open');
+  }
+
+  function openMenu() {
+    drawer?.classList.add('open');
+    menuBtn?.setAttribute('aria-expanded', 'true');
+    menuBtn?.classList.add('active');
+    document.body.classList.add('menu-open');
+  }
+
   if (menuBtn && drawer) {
-    menuBtn.addEventListener('click', () => {
-      drawer.classList.toggle('open');
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isOpen = drawer.classList.contains('open');
-      menuBtn.setAttribute('aria-expanded', isOpen);
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
     drawerLinks.forEach(link => {
       link.addEventListener('click', () => {
-        drawer.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
+        closeMenu();
       });
     });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (drawer.classList.contains('open') && !drawer.contains(e.target) && !menuBtn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+        closeMenu();
+      }
+    });
   }
-}
-
-/* --------------------------------------------------------------------------
-   Cinema HUD Live Timecode (HH:MM:SS:FF)
-   -------------------------------------------------------------------------- */
-function initTimecode() {
-  const timecodeEl = document.getElementById('liveTimecode');
-  if (!timecodeEl) return;
-
-  let frames = 0;
-  setInterval(() => {
-    const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-    frames = (frames + 1) % 60;
-    const f = String(frames).padStart(2, '0');
-    timecodeEl.textContent = `${h}:${m}:${s}:${f}`;
-  }, 100);
 }
 
 /* --------------------------------------------------------------------------
