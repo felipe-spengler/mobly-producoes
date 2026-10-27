@@ -1,0 +1,14 @@
+{
+  "name": "mobly-producoes",
+  "version": "3.0.0",
+  "description": "Mobly Produções — Débora Nogueira | Videomaker Mobile & Social Media em Goiânia",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}
