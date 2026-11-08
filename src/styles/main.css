@@ -924,7 +924,7 @@ body.menu-open {
 
 @media (min-width: 1024px) {
   .videos-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1026,38 +1026,31 @@ body.menu-open {
 }
 
 .play-circle {
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: rgba(247, 245, 240, 0.92);
-  color: var(--bg-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  transition: all var(--transition-fast);
-}
-
-.play-circle.whatsapp-circle {
-  width: 50px;
-  height: 50px;
   background: rgba(22, 19, 17, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-butter);
-  color: #25d366;
+  color: var(--color-butter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  transition: all var(--transition-fast);
 }
 
-.play-circle.whatsapp-circle svg {
-  margin-left: 0;
+.play-circle svg {
+  margin-left: 2px;
 }
 
-.video-card:hover .play-circle.whatsapp-circle {
-  background: #25d366;
-  color: #0b0c0e;
-  border-color: #25d366;
-  transform: scale(1.12);
-  box-shadow: 0 0 25px rgba(37, 211, 102, 0.6);
+.video-card:hover .play-circle {
+  background: var(--color-butter);
+  color: var(--bg-dark);
+  border-color: var(--color-butter);
+  transform: scale(1.15);
+  box-shadow: 0 0 25px rgba(240, 226, 182, 0.65);
 }
 
 .video-card-bottom {
@@ -2640,7 +2633,7 @@ body.menu-open {
 .cinema-modal-content {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: min(92vw, 540px);
   background-color: var(--bg-dark);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
@@ -2677,21 +2670,25 @@ body.menu-open {
 .modal-video-container {
   width: 100%;
   aspect-ratio: 9 / 16;
-  max-height: 65vh;
+  max-height: 72vh;
   background-color: #000;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 600px) {
   .modal-video-container {
-    max-height: 70vh;
+    max-height: 76vh;
   }
 }
 
 .modal-video-container video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: #000;
 }
 
 .modal-info-bar {

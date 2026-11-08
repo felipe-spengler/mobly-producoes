@@ -105,17 +105,17 @@ function initVideoPlayerModal() {
       });
     }
 
-    const handleCardAction = () => {
-      const whatsappMsg = card.getAttribute('data-whatsapp-msg');
-      if (whatsappMsg) {
-        const url = `https://wa.me/5564981346985?text=${encodeURIComponent(whatsappMsg)}`;
-        window.open(url, '_blank', 'noopener,noreferrer');
-        return;
-      }
+    const handleCardAction = (e) => {
       const src = card.getAttribute('data-video-src');
       if (src) {
         const title = card.getAttribute('data-video-title') || 'Vídeo Mobly';
         openCinemaModal(src, title);
+        return;
+      }
+      const whatsappMsg = card.getAttribute('data-whatsapp-msg');
+      if (whatsappMsg) {
+        const url = `https://wa.me/5564981346985?text=${encodeURIComponent(whatsappMsg)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
       }
     };
 
