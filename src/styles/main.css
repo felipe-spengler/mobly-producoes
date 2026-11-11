@@ -2689,6 +2689,55 @@ body.menu-open {
   height: 100%;
   object-fit: contain;
   background-color: #000;
+  transition: opacity 0.3s ease;
+}
+
+.modal-video-container video.buffering {
+  opacity: 0.6;
+}
+
+.video-buffer-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  background: rgba(7, 8, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 8;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.video-buffer-spinner.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spinner-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 226, 182, 0.2);
+  border-top-color: var(--color-butter);
+  box-shadow: 0 0 20px rgba(240, 226, 182, 0.3);
+  animation: cinemaSpin 0.85s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+}
+
+@keyframes cinemaSpin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-text {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-butter);
 }
 
 .modal-info-bar {

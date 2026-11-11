@@ -85,8 +85,27 @@ function initVideoPlayerModal() {
   const modalTitle = document.getElementById('modalVideoTitle');
   const closeBtn = document.getElementById('closeModalBtn');
   const modalWhatsapp = document.getElementById('modalWhatsappBtn');
+  const spinner = document.getElementById('modalVideoSpinner');
   const videoCards = document.querySelectorAll('.video-card');
   const heroPlayBtn = document.getElementById('heroPlayBtn');
+
+  function showBufferSpinner() {
+    spinner?.classList.add('active');
+    modalVideo?.classList.add('buffering');
+  }
+
+  function hideBufferSpinner() {
+    spinner?.classList.remove('active');
+    modalVideo?.classList.remove('buffering');
+  }
+
+  if (modalVideo) {
+    modalVideo.addEventListener('waiting', showBufferSpinner);
+    modalVideo.addEventListener('seeking', showBufferSpinner);
+    modalVideo.addEventListener('playing', hideBufferSpinner);
+    modalVideo.addEventListener('canplay', hideBufferSpinner);
+    modalVideo.addEventListener('canplaythrough', hideBufferSpinner);
+  }
 
   // Video hover preview & click actions
   videoCards.forEach(card => {
@@ -139,19 +158,43 @@ function initVideoPlayerModal() {
 
   function openCinemaModal(src, title) {
     if (!modal || !modalVideo) return;
+    showBufferSpinner();
+    modalVideo.preload = 'auto';
     modalVideo.src = src;
     if (modalTitle) modalTitle.textContent = title;
     if (modalWhatsapp) {
-      const text = encodeURIComponent(`Olá Débora! Adorei o vídeo "${title}" no site da Mobly e gostaria de solicitar um orçamento para meu projeto.`);
+      const text = encodeURIComponent(`Olá Débora! Adorei o vídeo "${title}" no site da Mobly e gostaria de solicitar uma proposta para meu projeto.`);
       modalWhatsapp.href = `https://wa.me/5564981346985?text=${text}`;
     }
     modal.classList.add('open');
-    modalVideo.play().catch(() => {});
     document.body.style.overflow = 'hidden';
+
+    // Aguarda carregar dados de buffer antes de iniciar a reprodução contínua
+    const startSmoothPlay = () => {
+      hideBufferSpinner();
+      modalVideo.play().catch(() => {});
+      modalVideo.removeEventListener('canplay', startSmoothPlay);
+      modalVideo.removeEventListener('canplaythrough', startSmoothPlay);
+    };
+
+    if (modalVideo.readyState >= 3) {
+      // Já tem buffer suficiente
+      startSmoothPlay();
+    } else {
+      modalVideo.addEventListener('canplay', startSmoothPlay, { once: true });
+      modalVideo.addEventListener('canplaythrough', startSmoothPlay, { once: true });
+      // Timeout de segurança para não travar em conexões instáveis
+      setTimeout(() => {
+        if (modal.classList.contains('open')) {
+          startSmoothPlay();
+        }
+      }, 3000);
+    }
   }
 
   function closeCinemaModal() {
     if (!modal || !modalVideo) return;
+    hideBufferSpinner();
     modal.classList.remove('open');
     modalVideo.pause();
     modalVideo.currentTime = 0;
