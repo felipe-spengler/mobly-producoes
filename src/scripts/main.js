@@ -113,7 +113,7 @@ function initVideoPlayerModal() {
     if (video) {
       card.addEventListener('mouseenter', () => {
         if (window.innerWidth >= 992) {
-          video.play().catch(() => {});
+          video.play().catch(() => { });
         }
       });
       card.addEventListener('mouseleave', () => {
@@ -172,7 +172,7 @@ function initVideoPlayerModal() {
     // Aguarda carregar dados de buffer antes de iniciar a reprodução contínua
     const startSmoothPlay = () => {
       hideBufferSpinner();
-      modalVideo.play().catch(() => {});
+      modalVideo.play().catch(() => { });
       modalVideo.removeEventListener('canplay', startSmoothPlay);
       modalVideo.removeEventListener('canplaythrough', startSmoothPlay);
     };
